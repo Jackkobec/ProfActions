@@ -4,12 +4,19 @@ package roles;
  * Created by Jack on 23.10.2016.
  */
 public class User {
-     String name;
-     int age;
+     public String name;
+     public int age;
+     public int[] mas;
 
     public User(String name, int age) {
         this.name = name;
         this.age = age;
+    }
+
+    public User(String name, int age, int[] mas) {
+        this.name = name;
+        this.age = age;
+        this.mas = mas;
     }
 
     public String getName() {
