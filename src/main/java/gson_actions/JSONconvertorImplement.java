@@ -1,59 +1,58 @@
 package gson_actions;
 
-import com.google.gson.Gson;
-
 import java.lang.reflect.Field;
+import java.util.Arrays;
 
 /**
  * Created by Jack on 22.10.2016.
  */
 public class JSONconvertorImplement implements IJSONconvertor {
 
-    public String toJson(Object obj) {
-        Gson gson = new Gson();
+    public String objectToJson(Object obj) {
+
         Class cl = obj.getClass();
 
-        StringBuilder sb = new StringBuilder();
+        String json = "";
         String jsonClassStart = "{";
         String jsonClassEnd = "}";
+
         String kav = "\"";
-        String json = "";
-        String resJson = "";
         Field[] fields = cl.getDeclaredFields();
 
         for (int i = 0; i < fields.length; ++i) {
 
             try {
                 String jfieldName = kav + fields[i].getName() + kav;
-                String jvalue = ""; //fields[i].getType().isPrimitive() ? fields[i].get(obj).toString() : kav + fields[i].get(obj).toString() + kav;
+                String jvalue = "";
 
                 if (fields[i].getType().isPrimitive()) {
                     jvalue = fields[i].get(obj).toString();
                 } else if (fields[i].getType().isInstance("")) {
                     jvalue = kav + fields[i].get(obj).toString() + kav;
                 } else if (fields[i].getType().isArray()) {
-                    jvalue = "[" + fields[i].get(obj).toString() + "]";
+                    jvalue = arrayToString(fields[i].get(obj));
                 } else {
-                    jvalue = "{" + fields[i].get(obj).toString() + "}";
+                    jvalue = objectToJson(fields[i].get(obj));
                 }
 
-                if (i == fields.length - 1) {
-                    json += jfieldName + ":" + jvalue;
-                } else {
-                    json += jfieldName + ":" + jvalue + ",";
-                }
+                json += i == fields.length - 1 ? jfieldName + ":" + jvalue : jfieldName + ":" + jvalue + ",";
 
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
-            resJson = jsonClassStart + json + jsonClassEnd;
         }
-        return resJson;
+        return jsonClassStart + json + jsonClassEnd;
     }
 
+    public static String arrayToString(Object obj) {
+        Class cl = obj.getClass();
+        if (cl.isArray()) {
+            return Arrays.toString((int[]) obj).replaceAll(" +", "");
+        }
+        return null;
+    }
 
     public <T> T classFromJson(String str, Class<T> cl) {
-
         // возвравщает отпарсенный json в инстанс класса <T>
         return null;
     }

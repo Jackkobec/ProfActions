@@ -1,6 +1,7 @@
 import com.google.gson.Gson;
-import reflection_actions.ConvertorImplement;
-import reflection_actions.IConvertor;
+import gson_actions.IJSONconvertor;
+import gson_actions.JSONconvertorImplement;
+import roles.Car;
 import roles.User;
 
 /**
@@ -8,19 +9,20 @@ import roles.User;
  */
 public class TestConvertor {
     public static void main(String[] args) {
-        IConvertor iConvertor = new ConvertorImplement();
-        User us = new User("Vasa", 22);
+        IJSONconvertor ijsoNconvertor = new JSONconvertorImplement();
+        User us = new User("Vasa", 22, new int[]{1,2,3}, new Car("Lexus"));
 
-        String res = iConvertor.toString(us);
-        System.out.println(res);
         Gson gson = new Gson();
 //        String jj = "HiThere";
 //        Class cl = us.getClass();
         int[] mas = {1,2,3};
+        System.out.println();
+        System.out.println(gson.toJson(us));
+        System.out.println(ijsoNconvertor.objectToJson(us));
 
-        System.out.println(gson.toJson(mas));
-        // System.out.println(gson.toJson(cl.getName()));
-        // System.out.println(gson.toJson(cl.getName()));
+
+        // System.out.println(gson.objectToJson(cl.getName()));
+        // System.out.println(gson.objectToJson(cl.getName()));
 //        String x = "\\";
 //        String y = "\"";
 //        System.out.println("It's Windows path: " + y + "C:" + x + "Program Files" + x + "Java" + x + "jdk1.7.0" + x + "bin" + y);

@@ -1,12 +1,15 @@
 package roles;
 
+import java.awt.*;
+
 /**
  * Created by Jack on 23.10.2016.
  */
 public class User {
-     public String name;
-     public int age;
-     public int[] mas;
+    public String name;
+    public int age;
+    public int[] mas;
+    public Car car;
 
     public User(String name, int age) {
         this.name = name;
@@ -17,6 +20,13 @@ public class User {
         this.name = name;
         this.age = age;
         this.mas = mas;
+    }
+
+    public User(String name, int age, int[] mas, Car car) {
+        this.name = name;
+        this.age = age;
+        this.mas = mas;
+        this.car = car;
     }
 
     public String getName() {
