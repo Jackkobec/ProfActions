@@ -4,6 +4,7 @@ import gson_actions.JSONconvertorImplement;
 import org.junit.Before;
 import org.junit.Test;
 import roles.Car;
+import roles.TestClass;
 import roles.User;
 
 import static org.junit.Assert.assertEquals;
@@ -20,7 +21,7 @@ public class TestJSONconvertor {
 
     @Before
     public void initData() {
-        us = new User("Vasa", 22, new int[]{1, 2, 3}, new Car("Lexus"));
+        us = new User("Vasa", 22, new int[]{1, 2, 3}, new Car("Lexus", new TestClass("Test")));
         ijsonConvertor = new JSONconvertorImplement();
         gson = new Gson();
     }
@@ -29,6 +30,7 @@ public class TestJSONconvertor {
     public void testToJSONposetive() {
         assertEquals(gson.toJson(us), ijsonConvertor.objectToJson(us));
     }
+
     @Test
     public void testToJSONnegative() {
         assertFalse("{\"name\":\"Vasa\",\"age\":22,\"mas\":[1,2,3],\"car\":{\"model\":\"Test Failer\"}}".equals(ijsonConvertor.objectToJson(us)));

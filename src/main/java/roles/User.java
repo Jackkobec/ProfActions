@@ -1,6 +1,7 @@
 package roles;
 
 import java.awt.*;
+import java.util.Arrays;
 
 /**
  * Created by Jack on 23.10.2016.
@@ -50,6 +51,8 @@ public class User {
         return "User{" +
                 "name='" + name + '\'' +
                 ", age=" + age +
+                ", mas=" + Arrays.toString(mas) +
+                ", car=" + car +
                 '}';
     }
 }
