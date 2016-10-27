@@ -1,9 +1,6 @@
 package gson_actions;
 
-import com.google.gson.internal.Primitives;
-
 import java.lang.reflect.Field;
-import java.lang.reflect.Type;
 import java.util.Arrays;
 
 /**
@@ -38,7 +35,7 @@ public class JSONconvertorImplement implements IJSONconvertor {
                     jvalue = objectToJson(fields[i].get(obj));
                 }
 
-               //json += (i == fields.length - 1) ? jfieldName + ":" + jvalue : jfieldName + ":" + jvalue + ",";
+                //json += (i == fields.length - 1) ? jfieldName + ":" + jvalue : jfieldName + ":" + jvalue + ",";
                 json += jfieldName + ":" + jvalue + (i == fields.length - 1 ? "" : ",");
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
@@ -66,9 +63,54 @@ public class JSONconvertorImplement implements IJSONconvertor {
         return null;
     }
 
-    public <T> T classFromJson(String str, Class<T> cl) {
-        Object result = new Object();
-        return (T) result;
+    public <T> T classFromJson(String json, Class<T> cl) throws IncorrectClassException, IllegalAccessException, InstantiationException {
+        String classname = cl.getName();
+        String withoutBrackes = psrserObject(json);
+        T t = cl.newInstance();
+        return (T) (classname + "{"+ fromJson(withoutBrackes, cl) + "}");
+    }
+
+    public <T> String fromJson(String jsonWithoutBrackets, Class<T> cl) throws IncorrectClassException {
+        Field[] fields = cl.getDeclaredFields();
+        String res = "";
+        for (int i = 0; i < fields.length; ++i) {
+
+            res += fields[i].getName() + "=" + fromJson(jsonWithoutBrackets, fields[i].getName()) + ((i == fields.length - 1) ? "" : ", ");
+        }
+        return res;
+    }
+    public String fromJson(String jsonWithoutBrackets, String fieldName) throws IncorrectClassException {
+        if (!jsonWithoutBrackets.contains(fieldName)) {
+            throw new IncorrectClassException("Поле не найдено. Скорее всего передан неправильный класс.");
+        } else {
+            int start = jsonWithoutBrackets.indexOf(fieldName);
+            int newStart = start + fieldName.length();
+            return parserFieldValue(jsonWithoutBrackets.substring(newStart));
+        }
+    }
+
+    public String parserFieldValue(String str) {
+        String res = "";
+        int start = str.indexOf(':');
+        int end = str.indexOf(',');
+        if (str.substring(start, start + 2).contains("\"")) {
+            res += str.substring(start + 1, end);
+        } else if (str.substring(start, start + 2).contains("[")) {
+            res += psrserArray(str.substring(start + 1));
+        } else if (str.substring(start, start + 2).contains("{")) {
+            res += psrserObjectValue(str.substring(start + 1));
+        } else if (str.substring(start, start + 2).contains("")) {
+            res += str.substring(start + 1, end);
+        }
+        return res;//str.substring(start + 1, end);
+    }
+
+
+
+    public String psrserObjectValue(String str) {
+        int start = str.indexOf('{');
+        int end = str.lastIndexOf('}');
+        return str.substring(start, end) + "}";
     }
 
     public String psrserObject(String str) {
@@ -80,6 +122,67 @@ public class JSONconvertorImplement implements IJSONconvertor {
     public String psrserArray(String str) {
         int start = str.indexOf('[');
         int end = str.lastIndexOf(']');
-        return str.substring(start + 1, end);
+        return "[" + str.substring(start + 1, end) + "]";
     }
+
+    public String psrserFieldName(String str) {
+        int start = str.indexOf('"');
+        int end = str.indexOf(':');
+        return str.substring(start + 1, end - 1);
+    }
+
+//    public String parserFieldValue(String str) {
+//        int start = str.indexOf(':');
+//        int end = str.indexOf(',');
+//        return str.substring(start + 1, end);
+//    }
+//    public String fromJson(String str) {
+//        //String res = "";
+//        int fieldEnd = fieldEndDetector(str);
+//        int arrayEndDetector = arrayEndDetector(str);
+//        if (str.substring(0, 1).contains(" ")) {
+//            fromJson(str.substring(1));
+//        }
+//
+//        if (str.substring(0, 1).contains("\"")) {
+//            return psrserFieldName(str) + "=" + parserFieldValue(str) + fromJson(str.substring(fieldEnd + 1));
+//        } else if (str.substring(0, 1).contains("[")) {
+//            return psrserArray(str);// + ", " + fromJson(str.substring(arrayEndDetector+1));
+//        } else if (str.substring(0, 1).contains("{")) {
+//            return psrserObject(str) + psrserObject(str);
+//        }
+////       fromJson(str.substring(fieldEnd-1));
+//        return "";//fromJson(str.substring(fieldEnd));
+//    }
+//public int fieldEndDetector(String str) {
+//    return new Integer(str.indexOf("\""));
+//}
+//
+//    public int arrayEndDetector(String str) {
+//        return new Integer(str.indexOf(']'));
+//    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

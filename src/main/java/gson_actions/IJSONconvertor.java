@@ -7,5 +7,5 @@ public interface IJSONconvertor {
 
     String objectToJson(Object obj);
 
-    <T> T classFromJson(String str, Class<T> cl);
+    <T> T classFromJson(String str, Class<T> cl) throws IncorrectClassException, IllegalAccessException, InstantiationException;
 }

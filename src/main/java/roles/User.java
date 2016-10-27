@@ -12,6 +12,9 @@ public class User {
     public int[] mas;
     public Car car;
 
+    public User() {
+    }
+
     public User(String name, int age) {
         this.name = name;
         this.age = age;
