@@ -10,7 +10,7 @@ import java.lang.reflect.Field;
 public class MiniOutputTests {
     public static void main(String[] args) {
 
-        User us = new User("Vasa", 22, new int[]{1, 2, 3}, new Car("Toyota", new TestClass("Test")));
+        User us = new User("Vasa", 22, new int[]{1, 2, 3}, new Car("Toyota", new TestClass(22, "Test")));
 
         Class cl = us.getClass();
         Field[] fields = cl.getDeclaredFields();

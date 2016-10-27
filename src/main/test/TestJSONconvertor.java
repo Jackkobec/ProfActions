@@ -21,7 +21,7 @@ public class TestJSONconvertor {
 
     @Before
     public void initData() {
-        us = new User("Vasa", 22, new int[]{1, 2, 3}, new Car("Lexus", new TestClass("Test")));
+        us = new User("Vasa", 22, new int[]{1, 2, 3}, new Car("Lexus", new TestClass(22, "Test")));
         ijsonConvertor = new JSONconvertorImplement();
         gson = new Gson();
     }

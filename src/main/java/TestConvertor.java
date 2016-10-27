@@ -17,7 +17,7 @@ public class TestConvertor {
     public static void main(String[] args) {
         IJSONconvertor ijsoNconvertor = new JSONconvertorImplement();
         Car car = new Car("Toyota");
-        User us = new User("Vasa", 22, new int[]{1, 2, 3}, new Car("Toyota", new TestClass("Test")));
+        User us = new User("Vasa", 22, new int[]{1, 2, 3}, new Car("Toyota", new TestClass(22, "Test")));
         Class cl = us.getClass();
         Field[] fields = cl.getDeclaredFields();
         System.out.println(Arrays.toString(fields));
@@ -32,16 +32,31 @@ public class TestConvertor {
         User user = gson.fromJson("{\"name\":\"Vasa\",\"age\":22,\"mas\":[1,2,3],\"car\":{\"model\":\"Toyota\",\"cl\":{\"test\":\"Test\"}}}", User.class);
         System.out.println(user);
 
-        System.out.println("witout brakes:");
-        String witoutbrakes =  new JSONconvertorImplement().psrserObject(
-                "{\"name\":\"Vasa\",\"age\":22,\"mas\":[1,2,3],\"car\":{\"model\":\"Toyota\",\"cl\":{\"test\":\"Test\"}}}");
-        System.out.println(witoutbrakes);
-        System.out.println("classFromJson:");
+        TestClass tc = new TestClass(22, "value");
+        System.out.println(ijsoNconvertor.objectToJson(tc));
         try {
-            System.out.println(new JSONconvertorImplement().fromJson(witoutbrakes, User.class));
+           // TestClass tc2 = ijsoNconvertor.classFromJson("{\"age\":22,\"test\":\"value\"}", TestClass.class);
+           // System.out.println(tc2);
+            User usert = ijsoNconvertor.classFromJson("{\"name\":\"Vasa\",\"age\":22,\"mas\":[1,2,3],\"car\":{\"model\":\"Toyota\",\"cl\":{\"test\":\"Test\"}}}", User.class);
+            System.out.println(usert);
         } catch (IncorrectClassException e) {
             e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
         }
+
+//        System.out.println("witout brakes:");
+//        String witoutbrakes =  new JSONconvertorImplement().psrserObject(
+//                "{\"name\":\"Vasa\",\"age\":22,\"mas\":[1,2,3],\"car\":{\"model\":\"Toyota\",\"cl\":{\"test\":\"Test\"}}}");
+//        System.out.println(witoutbrakes);
+//        System.out.println("classFromJson:");
+//        try {
+//            System.out.println(new JSONconvertorImplement().fromJson(witoutbrakes, User.class));
+//        } catch (IncorrectClassException e) {
+//            e.printStackTrace();
+//        }
 //        try {
 //            User formJsonUser = ijsoNconvertor.classFromJson("{\"name\":\"Vasa\",\"age\":22,\"mas\":[1,2,3],\"car\":{\"model\":\"Toyota\",\"cl\":{\"test\":\"Test\"}}}", User.class);
 //        } catch (IncorrectClassException e) {
