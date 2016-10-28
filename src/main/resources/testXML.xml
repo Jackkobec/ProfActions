@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<team>
+    <user id = '1'>
+        <name>Serhii</name>
+        <adress>
+            <city>Kiev</city>
+            <street>Lomonosova</street>
+        </adress>
+    </user>
+    <user id = '2'>
+        <name>Sasha</name>
+        <address>
+            <city>Kiev</city>
+            <street>Nosova</street>
+        </address>
+    </user>
+    <user id = '3'>
+        <name>Sasha</name>
+        <address>
+            <city>Lvov</city>
+            <street>Franka</street>
+        </address>
+    </user>
+    <user id = '4'>
+        <name>Vasa</name>
+        <address>
+            <city>Vinnica</city>
+            <street>Shevchenka</street>
+        </address>
+    </user>
+</team>

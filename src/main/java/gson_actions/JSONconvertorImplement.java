@@ -1,13 +1,8 @@
 package gson_actions;
 
-import sun.reflect.generics.tree.FieldTypeSignature;
-
 import java.lang.reflect.Field;
-import java.lang.reflect.Parameter;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by Jack on 22.10.2016.
@@ -97,7 +92,8 @@ public class JSONconvertorImplement implements IJSONconvertor {
 
     public <T> T parserFieldValue22(String str, Type type, Field field, T t) throws IllegalAccessException {
         int start = str.indexOf(':');
-        int end = 0;
+        int end;
+
         if (str.contains(",") && str.substring(str.indexOf(",") + 1).isEmpty()) {
             end = str.indexOf(',');
         } else
@@ -108,16 +104,22 @@ public class JSONconvertorImplement implements IJSONconvertor {
         } else if (type == int.class) {
             field.set(t, Integer.parseInt(str.substring(start + 1, end - 1).replaceAll(",", "")));
         } else if (type == int[].class) {
-            field.set(t, psrserArrayIntDigits(str.substring(start + 2, end - 2)));
+            field.set(t, pasrserArrayIntDigits(str.substring(start + 2, end - 2)));
         } else if (type == Arrays.class) {
             field.set(t, psrserArray(str.substring(start + 1)));
         } else {
-            // parserFieldValue22(str.substring(start +2, end), type, field, t);
+            try {
+                classFromJson(str.substring(start +1), type.getClass());
+            } catch (IncorrectClassException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            }
         }
         return t;
     }
 
-    public int[] psrserArrayIntDigits(String str) {
+    public int[] pasrserArrayIntDigits(String str) {
         return Arrays.stream(str.replaceAll(",", " ").split(" ")).mapToInt(Integer::parseInt).toArray();
     }
 
@@ -130,7 +132,8 @@ public class JSONconvertorImplement implements IJSONconvertor {
     public String psrserObject(String str) {
         int start = str.indexOf('{');
         int end = str.lastIndexOf('}');
-        return str.substring(start + 1, end);
+        //return str.substring(start + 1, end);
+        return str.substring(start+1 , end);
     }
 
     public String psrserArray(String str) {
