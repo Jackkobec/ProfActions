@@ -63,6 +63,6 @@ public class XMLparsers {
 
         System.out.println("======================");
 
-        xmlDOMparser(PATH_TO_XML_DOCUMENT);
+       // xmlDOMparser(PATH_TO_XML_DOCUMENT);
     }
 }

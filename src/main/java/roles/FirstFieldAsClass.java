@@ -7,6 +7,9 @@ public class FirstFieldAsClass {
     public TestClass testClass;
     public String str;
 
+    public FirstFieldAsClass() {
+    }
+
     public FirstFieldAsClass(TestClass testClass, String str) {
         this.testClass = testClass;
         this.str = str;

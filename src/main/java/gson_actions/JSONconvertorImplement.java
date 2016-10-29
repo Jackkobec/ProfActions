@@ -109,7 +109,7 @@ public class JSONconvertorImplement implements IJSONconvertor {
             field.set(t, psrserArray(str.substring(start + 1)));
         } else {
             try {
-                classFromJson(str.substring(start +1), type.getClass());
+              classFromJson(str.substring(start + 1), field.getType());
             } catch (IncorrectClassException e) {
                 e.printStackTrace();
             } catch (InstantiationException e) {
@@ -133,7 +133,7 @@ public class JSONconvertorImplement implements IJSONconvertor {
         int start = str.indexOf('{');
         int end = str.lastIndexOf('}');
         //return str.substring(start + 1, end);
-        return str.substring(start+1 , end);
+        return str.substring(start + 1, end);
     }
 
     public String psrserArray(String str) {

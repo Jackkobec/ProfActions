@@ -7,6 +7,8 @@ public class Car {
     public String model;
     public TestClass cl;
 
+    public Car() {
+    }
 
     public Car(String model) {
         this.model = model;

@@ -2,10 +2,10 @@
 <team>
     <user id = '1'>
         <name>Serhii</name>
-        <adress>
+        <address>
             <city>Kiev</city>
             <street>Lomonosova</street>
-        </adress>
+        </address>
     </user>
     <user id = '2'>
         <name>Sasha</name>
