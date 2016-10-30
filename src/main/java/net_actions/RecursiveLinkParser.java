@@ -44,7 +44,7 @@ public class RecursiveLinkParser {
                     && !el.toString().contains("/ru") && !el.toString().contains("search")
                     && !el.toString().contains("login") && !el.toString().contains("javascript")
                     && !el.toString().contains("javascript") && !el.toString().contains("copyright")
-                    && !el.toString().contains("contact")) {
+                    && !el.toString().contains("contact")&& !el.toString().contains("link_id=8")) {
                 //&&!el.toString().substring(1).isEmpty()
                 System.out.println(GLOBAL_ROOT_URL + el.attr("href"));
 
