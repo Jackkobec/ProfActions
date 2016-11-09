@@ -81,7 +81,10 @@ public class BalanceActions {
 
         @Override
         public void subBalance(int additional) {
-            int tempBalance = balance.getAndAdd(-additional);
+            //int tempBalance = balance.getAndAdd(-(-additional));
+//            AtomicInteger forSub = new AtomicInteger(-additional);
+//            int tempBalance = balance.getAndAdd(forSub);
+            int tempBalance = balance.getAndAdd(-(-additional));
             System.out.println(tempBalance);
         }
 
@@ -112,7 +115,7 @@ public class BalanceActions {
         }
     }
 
-     public static class SubThread implements Runnable {
+    public static class SubThread implements Runnable {
 
         private IContainer container;
         private int operationCount;

@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
  * Created by Jack on 06.11.2016.
  */
 public class TestBalanceAtions {
+
     private BalanceActions balanceActions;
     private BalanceActions.AddThread addThread;
     private BalanceActions.SubThread subThread;
